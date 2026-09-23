@@ -1,7 +1,6 @@
 const studentModel = require("../model/studentModel.js");
 
 /**
-
 - CRUD
 - CREATE STUDENT (POST)
 - READ STUDENT (GET) : GENERAL GET , SINGLE GET
