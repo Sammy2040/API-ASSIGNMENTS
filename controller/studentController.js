@@ -1,4 +1,5 @@
 const studentModel = require("../model/studentModel.js");
+const bcrypt = require("bcrypt");
 
 /**
 - CRUD
@@ -11,12 +12,14 @@ const studentModel = require("../model/studentModel.js");
 //CREATE STUDENT
 const createStudent = async (req, res) => {
     try {
-        const { name, regNo, email } = req.body;
-
+        const { name, regNo, email, password } = req.body;
+        const genSalt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, genSalt);
         const student = await studentModel.create({
             name,
             regNo,
-            email
+            email,
+            password: hashedPassword
         });
 
         res.status(201).json({
@@ -25,6 +28,32 @@ const createStudent = async (req, res) => {
         });
     } catch (error) {
         res.status(500).json({
+            message: error.message
+        });
+    }
+};
+
+const loginStudent = async (req, res) => {
+    try {
+        const { email, password } = req.body;
+        const student = await studentModel.findOne({ email });
+        if (!student) {
+            return res.status(404).json({
+                message: "Student not found"
+            });
+        }
+        const isMatch = await bcrypt.compare(password, student.password);
+        if (!isMatch) {
+            return res.status(401).json({
+                message: "Invalid credentials"
+            });
+        }
+        return res.status(200).json({
+            message: "Student logged in successfully",
+            data: student
+        });
+    } catch (error) {
+        return res.status(500).json({
             message: error.message
         });
     }
@@ -124,6 +153,7 @@ const deleteStudent = async (req, res) => {
 };
 
 module.exports = {
+    loginStudent,
     createStudent,
     getAllStudents,
     getSingleStudent,

@@ -1,9 +1,12 @@
+//import "dotenv/config"; mjs
+require("dotenv").config();   //cjs
+
 const express = require("express");
 const mongoose = require('mongoose');
 const studentRoute = require("./routes/studentRoutes.js");
 const productRoute = require("./routes/productRoutes.js");
-const compass_string = "mongodb://localhost:27017/cohort8_db";
-const atlas_string = "mongodb+srv://erisuena081_db_user:Tega2040@cluster0.ckheo2p.mongodb.net/cohort8_db?appName=Cluster0";
+const compass_string = process.env.COMPASS_STRING;
+const atlas_string = process.env.ATLAS_STRING;
 
 mongoose.connect(compass_string)
     .then(() => console.log("MongoDB Connected"))
