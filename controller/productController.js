@@ -1,5 +1,5 @@
 const productModel = require('../model/productModel');
-const userModel = require('../model/studentModel');    
+const studentModel = require('../model/studentModel');
 /**
  * create  upload Product 
  * get all .
@@ -11,24 +11,24 @@ const userModel = require('../model/studentModel');
 //create / upload
 const uploadProduct = async (req, res) => {
     try {
-        const getUserID = await userModel.findById(req.params.id);
-        const { name, price, description, category, stock, image } = req.body;
-if (!getUserID) {
+        const getStudentID = await studentModel.findById(req.params.userId);
+        const { name, price, description, category, quantity, stock, image } = req.body;
+        if (!getStudentID) {
             return res.status(404).json({
-                 message: "User not found" 
-             });
+                message: "Student not found"
+            });
         }
         const product = await productModel.create(
-            { 
-                name, description, price, category, stock, quantity, image 
-            
+            {
+                name, description, price, category, stock, quantity, image
+
             });
 
-        await getUserID.products.push(product._id);
-        await getUserID.save();
+        await getStudentID.products.push(product._id);
+        await getStudentID.save();
         return res.status(201).json(
-            { 
-                message: 'Product uploaded successfully', product 
+            {
+                message: 'Product uploaded successfully', product
 
             });
     } catch (error) {
@@ -42,7 +42,7 @@ const getAllProducts = async (req, res) => {
         const products = await productModel.find();
         return res.status(200).json({
             message: "All products fetched successfully",
-            data: getAll
+            data: products
         });
     } catch (error) {
         return res.status(500).json({ message: error.message });
@@ -50,6 +50,6 @@ const getAllProducts = async (req, res) => {
 };
 
 module.exports = {
-    uploadProduct,  
+    uploadProduct,
     getAllProducts
 }; 

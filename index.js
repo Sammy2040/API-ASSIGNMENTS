@@ -1,7 +1,7 @@
 const express = require("express");
 const mongoose = require('mongoose');
 const studentRoute = require("./routes/studentRoutes.js");
-
+const productRoute = require("./routes/productRoutes.js");
 const compass_string = "mongodb://localhost:27017/cohort8_db";
 const atlas_string = "mongodb+srv://erisuena081_db_user:Tega2040@cluster0.ckheo2p.mongodb.net/cohort8_db?appName=Cluster0";
 
@@ -20,6 +20,7 @@ app.get("/", (req, res) => {
     res.send("server is active");
 });
 app.use("/students", studentRoute);
+app.use("/products", productRoute);
 app.listen(port, () => {
     console.log(`server is up and running on port :${port}`);
 });

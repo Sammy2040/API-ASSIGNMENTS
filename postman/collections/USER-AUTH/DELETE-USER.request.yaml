@@ -1,0 +1,4 @@
+$kind: http-request
+url: localhost:4444/users
+method: DELETE
+order: 6000

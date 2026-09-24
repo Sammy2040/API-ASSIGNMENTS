@@ -1,0 +1,7 @@
+$kind: http-request
+url: localhost:4444/users/all-users
+method: GET
+body:
+  type: json
+  content: ""
+order: 3000

@@ -1,0 +1,15 @@
+$kind: http-request
+url: localhost:4444/users/new-user
+method: POST
+body:
+  type: json
+  content: "{\r
+
+    \    \"name\" : \"Sammy Kala\",\r
+
+    \    \"email\" : \"sammyt@web.oi\",\r
+
+    \    \"password\" : \"987654321\"\r
+
+    }\r\n"
+order: 2000
