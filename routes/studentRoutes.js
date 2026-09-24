@@ -7,7 +7,8 @@ const {
     deleteStudent,
     getAllStudents,
     getSingleStudent,
-    updateStudent
+    updateStudent,
+    loginStudent
 } = require("../controller/studentController.js");
 
 
